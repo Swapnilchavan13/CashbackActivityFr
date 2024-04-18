@@ -22,7 +22,7 @@ export const Puzzle = () => {
             if (isCorrect) {
                 alert("You guessed the word! You Got 30 CB");
                 try {
-                    const response = await fetch('http://192.168.0.117:8012/updateWallet/9', {
+                    const response = await fetch('http://192.168.0.117:8012/updateWallet/8', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
@@ -32,7 +32,7 @@ export const Puzzle = () => {
                     if (response.ok) {
                         console.log('Wallet updated successfully');
                         // Add transaction details
-                        const responseTransaction = await fetch('http://192.168.0.117:8012/newTransaction/9', {
+                        const responseTransaction = await fetch('http://192.168.0.117:8012/newTransaction/8', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'

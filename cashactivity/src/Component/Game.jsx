@@ -15,7 +15,7 @@ export const Game = () => {
         alert('Congratulations! You guessed the correct number! You Got 50 CB');
         try {
           // Update the wallet
-          const responseWallet = await fetch('http://192.168.0.117:8012/updateWallet/9', {
+          const responseWallet = await fetch('http://192.168.0.117:8012/updateWallet/8', {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json'
@@ -27,7 +27,7 @@ export const Game = () => {
           }
   
           // Add transaction details
-          const responseTransaction = await fetch('http://192.168.0.117:8012/newTransaction/9', {
+          const responseTransaction = await fetch('http://192.168.0.117:8012/newTransaction/8', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'

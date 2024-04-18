@@ -47,7 +47,7 @@ export const Quiz = () => {
 
                     alert("Wooohoo!!! 75 CB Added")
                     try {
-                        const response = await fetch('http://192.168.0.117:8012/updateWallet/9', {
+                        const response = await fetch('http://192.168.0.117:8012/updateWallet/8', {
                             method: 'PUT',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ export const Quiz = () => {
                             console.log('Wallet updated successfully');
                             
                             // Add transaction details
-                            const responseTransaction = await fetch('http://192.168.0.117:8012/newTransaction/9', {
+                            const responseTransaction = await fetch('http://192.168.0.117:8012/newTransaction/8', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
