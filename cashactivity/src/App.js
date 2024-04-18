@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from './Component/Navbar';
 import { Puzzle } from './Component/Puzzle';
 import { Game } from './Component/Game';
-import { Quiz } from './Component/quiz';
+import { Quiz } from './Component/Quiz';
 
 function App() {
   return (

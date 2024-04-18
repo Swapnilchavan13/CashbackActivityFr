@@ -1,13 +1,20 @@
 .answer-button {
-    padding: 10px 20px;
+    padding: 10px 10px;
     margin: 0 10px;
-    font-size: 16px;
+    font-size: 14px;
     background-color: #007bff;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+  }
+
+  .maindiv {
+    border: 2px solid black;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
   }
   
   .answer-button.selected {

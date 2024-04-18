@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../styles/puzzle.css';
 
 export const Puzzle = () => {
     const activityID = 2; // Corrected variable name

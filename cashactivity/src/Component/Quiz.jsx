@@ -3,7 +3,7 @@ import '../styles/quiz.css'; // Import CSS file for styling
 
 export const Quiz = () => {
     const activityID = 1; // Corrected variable name
-    const [points, setPoints] = useState(0);
+    const [points, setPoints] = useState(75);
     const [answered, setAnswered] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState({});
     const questions = [
@@ -44,6 +44,8 @@ export const Quiz = () => {
                 totalPoints = Math.min(totalPoints, 75);
                 setPoints(totalPoints);
                 if (totalPoints === 75) {
+
+                    alert("Wooohoo!!! 75 CB Added")
                     try {
                         const response = await fetch('http://192.168.0.117:8012/updateWallet/9', {
                             method: 'PUT',
@@ -90,6 +92,7 @@ export const Quiz = () => {
         <div className="quiz-container">
             <h1 className="quiz-title">Quiz</h1>
             {questions.map((q, index) => (
+            <div className='maindiv'>
                 <div key={index} className="question-container">
                     <h2 className="question">{q.question}</h2>
                     <div className="button-container">
@@ -104,13 +107,17 @@ export const Quiz = () => {
                         ))}
                     </div>
                 </div>
+            </div>
             ))}
+          
+            
+
             {answered ? null : (
                 <button className="submit-button" onClick={handleAnswer}>Submit</button>
             )}
-            {answered && (
+            {/* {answered && (
                 <p className="points">Total points: {points}</p>
-            )}
+            )} */}
         </div>
     );
 };
