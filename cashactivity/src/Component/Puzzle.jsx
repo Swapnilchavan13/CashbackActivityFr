@@ -1,86 +1,85 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { JigsawPuzzle } from "react-jigsaw-puzzle/lib";
+import "react-jigsaw-puzzle/lib/jigsaw-puzzle.css";
 import '../styles/puzzle.css';
 
 export const Puzzle = () => {
-    const activityID = 2; // Corrected variable name
-    const [points, setPoints] = useState(30); // Changed setpoints to setPoints for consistency
-    const [solved, setSolved] = useState(false);
-    const [solution, setSolution] = useState('HELLO'); // Set the correct solution here
-    const [currentAttempt, setCurrentAttempt] = useState(''); // Initialize the attempt with an empty string
-    const [description, setDescription] = useState("Let them know you've picked up the phone"); // Set the description here
+    const activityID = 2;
+    const [points, setPoints] = useState(100);
+    const [completed, setCompleted] = useState(false);
+    const [btn, setButton] = useState(false);
 
-    const handleInput = (event) => {
-        if (!solved) {
-            const { value } = event.target;
-            setCurrentAttempt(value.toUpperCase()); // Convert input to uppercase
-        }
-    };
-
-    const handleSubmit = async () => {
-        if (!solved) {
-            const isCorrect = currentAttempt === solution;
-            if (isCorrect) {
-                alert("You guessed the word! You Got 30 CB");
-                try {
-                    const response = await fetch('http://192.168.0.117:8012/updateWallet/8', {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ points })
-                    });
-                    if (response.ok) {
-                        console.log('Wallet updated successfully');
-                        // Add transaction details
-                        const responseTransaction = await fetch('http://192.168.0.117:8012/newTransaction/8', {
+    const handleSubmit = () => {
+        if (!completed) {
+            fetch('http://192.168.0.117:8012/updateWallet/8', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ points })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("You guessed the word! You Got 100 CB");
+                    setCompleted(true);
+                    
+                    // Add the second API call and alert only if not already completed
+                    if (!completed) {
+                        fetch('http://192.168.0.117:8012/newTransaction/8', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({ points, activityID }) // Corrected variable name
+                            body: JSON.stringify({ points, activityID })
+                        })
+                        .then(transactionResponse => {
+                            if (transactionResponse.ok) {
+                                console.log("Transaction completed successfully!");
+                            } else {
+                                console.error('Failed to update transactionTable');
+                            }
+                        })
+                        .catch(transactionError => {
+                            console.error('Error in transaction:', transactionError);
                         });
-                        if (!responseTransaction.ok) {
-                            console.error('Failed to update transactionTable');
-                        }
-                    } else {
-                        console.error('Failed to update walletTable');
                     }
-                } catch (error) {
-                    console.error('Error:', error);
+                } else {
+                    console.error('Failed to update walletTable');
                 }
-            } else {
-                alert("Sorry, try again!");
-            }
-            setSolved(true);
-        } else {
-            console.log("You've already guessed the word!");
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
     };
 
-    const handleReset = () => {
-        setCurrentAttempt('');
-        setSolved(false);
+    const handlePuzzleCompletion = () => {
+        setButton(true);
     };
 
     return (
-        <div className="puzzle-container">
-            <h1 className="puzzle-title">Guess the Word</h1>
-            <p className="description">{description}</p>
-            <div className="word-container">
-                <input
-                    type="text"
-                    value={currentAttempt}
-                    onChange={handleInput}
-                    className="word-input"
-                    maxLength={solution.length}
-                    readOnly={solved}
-                />
-            </div>
-            <div className="button-container">
-                <button className="submit-button" onClick={handleSubmit}>Submit</button>
-                <button className="reset-button" onClick={handleReset}>Reset</button>
-            </div>
-            {/* <p className="points">points: {points}</p> */}
-        </div>
+        <>
+            {btn ? (
+                <>
+                    <h2>Congratulations! You solved the puzzle!</h2>
+                </>
+            ) : (
+                <h2 className="tag">Unpuzzle the pieces!!</h2>
+            )}
+            <JigsawPuzzle
+                imageSrc={"https://w0.peakpx.com/wallpaper/994/867/HD-wallpaper-song-hye-kyo-korean-actress.jpg"}
+                rows={2}
+                columns={2}
+                onSolved={handlePuzzleCompletion}
+                className="jigsaw-puzzle"
+            />
+
+          {btn ? (
+              
+                    <button className="btn" onClick={handleSubmit}>Submit</button>
+            ) : (
+                "Not Correct"
+            )}
+        </>
     );
 };
