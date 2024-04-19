@@ -3,7 +3,7 @@ import '../styles/quiz.css'; // Import CSS file for styling
 
 export const Quiz = () => {
     const activityID = 1; // Corrected variable name
-    const [points, setPoints] = useState(75);
+    const [points, setPoints] = useState(125);
     const [answered, setAnswered] = useState(false);
     const [selectedOptions, setSelectedOptions] = useState({});
     const questions = [
@@ -21,6 +21,17 @@ export const Quiz = () => {
             question: "Which planet is known as the Red Planet?",
             options: ["Venus", "Mars", "Jupiter", "Saturn"],
             correctAnswer: "Mars"
+        },
+        // Additional questions
+        {
+            question: "What is the capital of France?",
+            options: ["London", "Berlin", "Paris", "Rome"],
+            correctAnswer: "Paris"
+        },
+        {
+            question: "What is the largest mammal on Earth?",
+            options: ["Elephant", "Blue whale", "Giraffe", "Lion"],
+            correctAnswer: "Blue whale"
         }
     ];
 
@@ -28,52 +39,43 @@ export const Quiz = () => {
         if (!answered) {
             setAnswered(true);
             let totalPoints = 0;
-            let allCorrect = true; // Flag to track if all answers are correct
             questions.forEach((q, index) => {
                 if (selectedOptions[index] === q.correctAnswer) {
                     totalPoints += 25; // Increase points by 25 for each correct answer
-                } else {
-                    allCorrect = false; // If any answer is incorrect, set the flag to false
                 }
             });
-            // Alert if not all answers are correct
-            if (!allCorrect) {
-                alert("Not all answers are correct. Please review your answers.");
-            } else {
-                // Cap total points at 75
-                totalPoints = Math.min(totalPoints, 75);
-                setPoints(totalPoints);
-                if (totalPoints === 75) {
-
-                    alert("Wooohoo!!! 75 CB Added")
-                    try {
-                        const response = await fetch('http://192.168.0.117:8012/updateWallet/8', {
-                            method: 'PUT',
+            setPoints(totalPoints); // Set total points
+            
+            // Update wallet and transaction if all answers are correct
+            if (totalPoints == 125) {
+                alert("Wooohoo!!! 125 CB Added");
+                try {
+                    const response = await fetch('http://192.168.0.117:8012/updateWallet/8', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ points }) // Sending updated points
+                    });
+                    if (response.ok) {
+                        console.log('Wallet updated successfully');
+                        
+                        // Add transaction details
+                        const responseTransaction = await fetch('http://192.168.0.117:8012/newTransaction/8', {
+                            method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
                             },
-                            body: JSON.stringify({ points }) // Sending updated points
+                            body: JSON.stringify({ points, activityID }) // Corrected variable name
                         });
-                        if (response.ok) {
-                            console.log('Wallet updated successfully');
-                            
-                            // Add transaction details
-                            const responseTransaction = await fetch('http://192.168.0.117:8012/newTransaction/8', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({ points, activityID }) // Corrected variable name
-                            });
-                            if (!responseTransaction.ok) {
-                                console.error('Failed to update transactionTable');
-                            }
-                        } else {
-                            console.error('Failed to update walletTable / transactionTable');
+                        if (!responseTransaction.ok) {
+                            console.error('Failed to update transactionTable');
                         }
-                    } catch (error) {
-                        console.error('Error:', error);
+                    } else {
+                        console.error('Failed to update walletTable / transactionTable');
                     }
+                } catch (error) {
+                    console.error('Error:', error);
                 }
             }
         } else {
@@ -110,8 +112,6 @@ export const Quiz = () => {
             </div>
             ))}
           
-            
-
             {answered ? null : (
                 <button className="submit-button" onClick={handleAnswer}>Submit</button>
             )}
