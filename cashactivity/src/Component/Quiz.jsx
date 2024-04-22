@@ -47,15 +47,15 @@ export const Quiz = () => {
             setPoints(totalPoints); // Set total points
             
             // Update wallet and transaction if all answers are correct
-            if (totalPoints == 125) {
-                alert("Wooohoo!!! 125 CB Added");
+            if (totalPoints>0) {
+                alert(`Wooohoo!!! ${totalPoints} CB Added`);
                 try {
                     const response = await fetch('http://192.168.0.117:8012/updateWallet/8', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ points }) // Sending updated points
+                        body: JSON.stringify({ points: totalPoints }) // Sending updated points
                     });
                     if (response.ok) {
                         console.log('Wallet updated successfully');
@@ -92,11 +92,13 @@ export const Quiz = () => {
 
     return (
         <div className="quiz-container">
-            <h1 className="quiz-title">Quiz</h1>
+            <h1 className="quiz-title">General Trivia!</h1>
+            <p>Select the correct answer from the options given and earn Cashback points.</p>
             {questions.map((q, index) => (
             <div className='maindiv'>
                 <div key={index} className="question-container">
-                    <h2 className="question">{q.question}</h2>
+                    <button className='qbtn'>QUESTION {index+1}</button>
+                    <p className="question">{q.question}</p>
                     <div className="button-container">
                         {q.options.map((option, optionIndex) => (
                             <button

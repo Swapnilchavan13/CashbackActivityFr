@@ -1,76 +1,57 @@
+/* game.css */
+
 .game-container {
-    max-width: 400px;
-    margin: 0 auto;
-    text-align: center;
-    padding: 20px;
-    border: 2px solid #ccc;
-    border-radius: 10px;
-    background-color: #f9f9f9;
-  }
-  
-  .game-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .input-container {
-    margin-bottom: 20px;
-  }
-  
-  .input-container input {
-    padding: 10px;
-    font-size: 16px;
-    width: 100px;
-  }
-  
-  .button-container button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button-container button:hover {
-    background-color: #0056b3;
-  }
-  
-  .message {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-  
-  .score {
-    font-size: 20px;
-  }
-  
-  /* For screens smaller than 600px (typical mobile devices) */
-@media only screen and (max-width: 600px) {
-  .game-container {
-    max-width: 90%; /* Adjust as needed */
-  }
+  margin: 0 auto;
+  text-align: center;
+}
 
-  .game-title {
-    font-size: 20px;
-  }
+.fire-image {
+  width: 350px;
+  height: auto;
+  margin-bottom: 20px;
+  border: 2px solid black;
+  padding: 10px;
+  border-radius: 10px;
+}
 
-  .input-container input {
-    width: 80px; /* Adjust as needed */
-  }
+.person-status {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
 
-  .button-container button {
-    padding: 8px 16px; /* Adjust as needed */
-    font-size: 14px; /* Adjust as needed */
-  }
+.option-container {
+  margin-bottom: 20px;
+}
 
-  .message {
-    font-size: 16px; /* Adjust as needed */
-  }
+.option-image {
+  width: 100px;
+  height: 80px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.option-container div{
+  border: 4px solid #201658;
+  width: 90%;
+  margin: auto;
+  margin-top: 10px;
+  border-radius: 10px;
+}
 
-  .score {
-    font-size: 18px; /* Adjust as needed */
-  }
+.option-image:hover {
+border: 2px solid green;
+}
+
+.gbtn {
+  background-color: #201658;
+  color: white;
+  font-weight: bolder;
+  border-radius: 5px;
+  padding: 2px 30px 2px 30px;
+  position: absolute;
+  margin-top: -12px;
+  margin-left: -70px;
+  border: none;
+  z-index: 1; /* Ensures it's above other elements */
+
 }

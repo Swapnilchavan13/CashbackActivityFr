@@ -64,8 +64,13 @@ export const Puzzle = () => {
                     <h2>Congratulations! You solved the puzzle!</h2>
                 </>
             ) : (
+                <>
                 <h2 className="tag">Unpuzzle the pieces!!</h2>
+                <p>Move the pieces around to reform the image shown below and earn Cashback points.</p>
+                </>
             )}
+            
+            <img className="mainimg" src="https://w0.peakpx.com/wallpaper/994/867/HD-wallpaper-song-hye-kyo-korean-actress.jpg" />
             <JigsawPuzzle
                 imageSrc={"https://w0.peakpx.com/wallpaper/994/867/HD-wallpaper-song-hye-kyo-korean-actress.jpg"}
                 rows={2}
